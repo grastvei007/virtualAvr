@@ -42,7 +42,10 @@ else{
 
 SOURCES += \
         main.cpp \
-    app.cpp
+    app.cpp \
+    ../avr/message.cpp \
+    ../avr/messagehandler.cpp \
+    ../avr/messagetranslationsenter.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -50,4 +53,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    app.h
+    app.h \
+    ../avr/message.h \
+    ../avr/messagehandler.h \
+    ../avr/messagetranslationsenter.h

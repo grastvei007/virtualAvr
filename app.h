@@ -4,6 +4,8 @@
 #include <QCoreApplication>
 #include <QString>
 #include <QByteArray>
+#include <QTimer>
+
 
 class Device;
 
@@ -17,8 +19,17 @@ private slots:
     void onDeviceAvailable(QString aDevice);
     void onDeviceConnected(QString aDevice);
     void onDataRecieved(QByteArray aData);
+
+    void onTimer();
+
 private:
-    Device *mDevice;
+    void sendDeviceName();
+
+private:
+    QByteArray mBuffer;
+
+    QTimer *mTimer;
+    bool mLock;
 };
 
 #endif // APP_H
