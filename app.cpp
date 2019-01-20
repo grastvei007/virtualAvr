@@ -19,6 +19,7 @@ MessageTranslationSenter mts;
 
 Device *mDevice;
 bool requestDeviceName;
+bool requestTags;
 
 
 void messageHandlerCallback(Message *&msg)
@@ -37,6 +38,11 @@ void deviceNameRequest()
 }
 
 
+void createTagsRequest()
+{
+    requestTags = true;
+}
+
 
 
 App::App(int argc, char *argv[]) : QCoreApplication(argc, argv),
@@ -44,6 +50,7 @@ App::App(int argc, char *argv[]) : QCoreApplication(argc, argv),
 {
     mDevice = nullptr;
     requestDeviceName = false;
+    requestTags = false;
     mTimer = new QTimer(this);
     mTimer->setInterval(100);
     connect(mTimer, &QTimer::timeout, this, &App::onTimer);
@@ -59,6 +66,7 @@ App::App(int argc, char *argv[]) : QCoreApplication(argc, argv),
 
     mts.init();
     mts.setDeviceNameFunc(deviceNameRequest);
+    mts.setCreateTagsFunc(createTagsRequest);
 
 }
 
@@ -108,6 +116,8 @@ void App::onTimer()
 
     if(requestDeviceName)
         sendDeviceName();
+    else if(requestTags)
+        createTags();
     else
         messageHandler.run();
 
@@ -133,4 +143,22 @@ void App::sendDeviceName()
 
 
     requestDeviceName = false;
+}
+
+
+void App::createTags()
+{
+    qDebug() << "Create tags...";
+    Message pb0;
+    pb0.init();
+    pb0.add("pb0", bool(0));
+    pb0.finnish();
+    int s = pb0.getSize();
+    char p[s+1];
+    pb0.getMessageData(p);
+    QByteArray pp(p, s+1);
+    mDevice->write(pp);
+
+
+    requestTags = false;
 }

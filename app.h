@@ -24,6 +24,7 @@ private slots:
 
 private:
     void sendDeviceName();
+    void createTags();
 
 private:
     QByteArray mBuffer;
