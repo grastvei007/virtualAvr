@@ -5,6 +5,7 @@ CONFIG += c++11 console
 CONFIG -= app_bundle
 
 TEMPLATE = app
+DEFINES += "AVR_TEST"
 
 release: TARGET = virtualavr
 debug: TARGET = virtualavrd
