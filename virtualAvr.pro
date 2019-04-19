@@ -34,7 +34,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += ../
 
 if(debug){
-    LIBS += -L$$(DEV_LIBS) -ldeviced
+    LIBS += -L$$(DEV_LIBS) -ldeviced -ltagsystemd
 }
 else{
     LIBS += ldevice
